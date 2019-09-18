@@ -11,6 +11,7 @@ import SchooldAutosuggest from '../Dropdown/SchooldAutosuggest';
 import SubjectTables from '../Table/SubjectTable';
 import SubjectFess from '../Dropdown/SubjectFees';
 import MediaCapture from '../File/MediaCapture ';
+import MuiPhoneNumber from 'material-ui-phone-number'
 
 class Register extends Component {
   constructor(props){
@@ -52,6 +53,35 @@ callbackFunctionForSubFees = (subfeesdropdowndData) => {
 //state = { schoolCodeVal: "" }
 callbackFunctionForSchoolCode = (schoolCodedropdowndData) => {
       this.setState({schoolCodeVal: schoolCodedropdowndData})
+}
+toInputUppercaseForStuName = e =>{
+   e.target.value = (""+ e.target.value).toUpperCase();
+    this.setState({stu_name:e.target.value});
+
+ }
+
+ toInputUppercaseForMotherName = e =>{
+  e.target.value = (""+ e.target.value).toUpperCase();
+   this.setState({mother_name:e.target.value});
+
+}
+
+toInputUppercaseForFatherName = e =>{
+  e.target.value = (""+ e.target.value).toUpperCase();
+   this.setState({father_name:e.target.value});
+
+}
+
+handleMotherNum=(value)=>{
+  console.log(value);
+  //this.mother_num=value;
+  this.setState({mother_num:value});
+}
+
+handleFatherNum=(value)=>{
+  console.log(value);
+  //this.mother_num=value;
+  this.setState({father_num:value});
 }
 
 handleInputChange(e) {
@@ -172,42 +202,42 @@ handleInputChange(e) {
            <TextField
              hintText="Enter your Name"
              floatingLabelText="Student Name"
-             onChange = {(event,newValue) => this.setState({stu_name:newValue})}
+             onChange = {this.toInputUppercaseForStuName}
              />
            <br/>
            <TextField
              hintText="Enter your Mother Name"
              floatingLabelText="Mother Name"
-             onChange = {(event,newValue) => this.setState({mother_name:newValue})}
+             onChange = {this.toInputUppercaseForMotherName}
              />
              <br/>
-             <TextField
-               id="standard-number"
-              hintText="Enter your Mother Phone Number"
-             floatingLabelText="Mother Phone Number"
-             onChange={(event,newValue) => this.setState({mother_num:newValue})}
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-              margin="normal" />
+             <MuiPhoneNumber
+             name="motherNum"
+             data-cy="user-phone"
+             defaultCountry={"in"}
+             id="standard-number"
+             label="Mother Phone Number"
+             value={this.state.motherNum}
+           // floatingLabelText="Mother Phone Number"
+            onChange={this.handleMotherNum} ></MuiPhoneNumber>
+             
            <br/>
            <TextField
              hintText="Enter your Father Name"
              floatingLabelText="Father Name"
-             onChange = {(event,newValue) => this.setState({father_name:newValue})}
+             onChange = {this.toInputUppercaseForFatherName}
              />
            <br/>
-           <TextField
-               id="standard-number"
-              hintText="Enter your Father Phone Number"
-             floatingLabelText="Father Phone Number"
-             onChange={(event,newValue) => this.setState({father_num:newValue})}
-            type="number"
-            InputLabelProps={{
-              shrink: true,
-            }}
-           margin="normal" />
+           <MuiPhoneNumber
+             name="fatherNum"
+             data-cy="user-phone"
+             defaultCountry={"in"}
+             id="standard-number"
+             label="Father Phone Number"
+             value={this.state.fatherNum}
+           // floatingLabelText="Mother Phone Number"
+            onChange={this.handleFatherNum} 
+            margin ="normal"></MuiPhoneNumber>
         <br/>
            <TextField
              hintText={userhintText}
