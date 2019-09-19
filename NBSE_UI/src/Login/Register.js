@@ -93,17 +93,18 @@ handleInputChange(e) {
     this.setState({dobVal: dob.value})
   }
 
-  subCheckedFunction = (subArray) =>{
+  subCheckedFunction = (subArray,count) =>{
     console.log(this.state.subFeesVal);
+    console.log(count);
     if(this.state.subFeesVal.length === 0){
       alert("Please select the number of subject for which you have paid fees");
     }else{
-      if(this.state.subFeesVal >= subArray.length){
+      if(this.state.subFeesVal > count){
     console.log(subArray);
     this.finalSubArray = subArray
     console.log(this.finalSubArray);
       }else{
-        alert("Please select " +this.state.subFeesVal + " subject for which you have paid fees");
+        alert("Please select only " +this.state.subFeesVal + " for which you have paid fees otherwise only first "+this.state.subFeesVal + " subjects will be considered");
       }
     }
     
@@ -267,7 +268,7 @@ handleInputChange(e) {
 
            <SubjectFess parentCallback = {this.callbackFunctionForSubFees}/>
         
-           <SubjectTables props = {this.props}  subCheckedFunction = {this.subCheckedFunction.bind(this)} />
+           <SubjectTables props = {this.props} dataFromParent = {this.state.subFeesVal}  subCheckedFunction = {this.subCheckedFunction.bind(this)} />
            <br/>
            
            <MediaCapture parentCallback = {this.callbackFunctionForImage}/>

@@ -70,10 +70,14 @@ export default function SubjectTables(props,subCheckedFunction) {
     // do whatever you want with isChecked value
   }
   
-
-  const handleCheck = (props,item,index,name) => event => {
+  let count = 0;
+  const handleCheck = (props,item,index,name,subFeesVal) => event => {
+    console.log(subFeesVal);
+    
     setState({ ...state, [name]: event.target.checked });
     let newFields = state.fields
+    count = newFields.length;
+    if(subFeesVal > newFields.length){
     if(event.target.checked){
       newFields[index] = {
         check: !newFields[index],
@@ -81,7 +85,8 @@ export default function SubjectTables(props,subCheckedFunction) {
       }
       setState({fields: newFields})
     }
-    props.subCheckedFunction(newFields);
+  }
+    props.subCheckedFunction(newFields,count);
   };
   
 
@@ -120,7 +125,7 @@ export default function SubjectTables(props,subCheckedFunction) {
               <Checkbox
                 // checked={state.checkedB}
                // onChange={e => this.handleChange(e)}
-                 onChange={handleCheck(props,row,index,'checkedB')}
+                 onChange={handleCheck(props,row,index,'checkedB',props.dataFromParent)}
                   value="checkedB"
                    color="primary"
                    inputProps={{
