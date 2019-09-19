@@ -211,6 +211,7 @@ handleInputChange(e) {
              onChange = {this.toInputUppercaseForMotherName}
              />
              <br/>
+             <br/>
              <MuiPhoneNumber
              name="motherNum"
              data-cy="user-phone"
@@ -227,6 +228,7 @@ handleInputChange(e) {
              floatingLabelText="Father Name"
              onChange = {this.toInputUppercaseForFatherName}
              />
+           <br/>
            <br/>
            <MuiPhoneNumber
              name="fatherNum"

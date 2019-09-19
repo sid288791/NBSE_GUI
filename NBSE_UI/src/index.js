@@ -25,7 +25,7 @@ const routing = (
     <Switch>
         <Route exact path="/" component={App} />
         <Route exact path="/VerifyOTP" component={VerifyOTP} />
-        <Route path="/resendOTP" componenqa1At={MobileNumber} />
+        <Route path="/resendOTP" component={MobileNumber} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route component={Notfound} />

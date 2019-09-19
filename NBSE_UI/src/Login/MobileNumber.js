@@ -8,6 +8,7 @@ import VerifyOTP from './VerifyOTP';
 //import UploadPage from './UploadPage';
 //import history from "./history";
 import {withRouter} from "react-router-dom";
+import MuiPhoneNumber from 'material-ui-phone-number'
 
 
 class MobileNumber extends React.Component{
@@ -17,6 +18,13 @@ class MobileNumber extends React.Component{
             mobile_number:''
         }
     }
+
+    handleMobileNum=(value)=>{
+      console.log(value);
+      //this.mother_num=value;
+      this.setState({mobile_number:value});
+    }
+
     handleClick(event,role){
         var apiBaseUrl = "http://localhost:4000/api/";
         // console.log("values in register handler",role);
@@ -58,12 +66,18 @@ class MobileNumber extends React.Component{
             <AppBar
                title="Mobile Number"
              />
+             <br/>
 
-        <TextField
-             hintText={userhintText}
-             floatingLabelText={userLabel}
-             onChange = {(event,newValue) => this.setState({mobile_number:newValue})}
-             />
+    <MuiPhoneNumber
+             name="mobileNum"
+             data-cy="user-phone"
+             defaultCountry={"in"}
+             id="standard-number"
+             label="Phone Number"
+             value={this.state.mobileNum}
+           // floatingLabelText="Mother Phone Number"
+            onChange={this.handleMobileNum} 
+            margin ="normal"></MuiPhoneNumber>
              <br/>
            <RaisedButton label="Send OTP" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
              </div>
