@@ -65,43 +65,36 @@ export default function SubjectTables(props,subCheckedFunction) {
     subCheckedFunction :Function
   });
 
-  function handleChange(e) {
-    let isChecked = e.target.checked;
-    // do whatever you want with isChecked value
-  }
   
-  let count = 0;
+  let flag = false;
   const handleCheck = (props,item,index,name,subFeesVal) => event => {
     console.log(subFeesVal);
     
     setState({ ...state, [name]: event.target.checked });
     let newFields = state.fields
-    count = newFields.length;
-    if(subFeesVal > newFields.length){
+  
     if(event.target.checked){
+     
       newFields[index] = {
         check: !newFields[index],
         data: item
       }
       setState({fields: newFields})
+    }else{
+    
+      newFields.splice(index,1);
+      flag=true;
     }
-  }
-    props.subCheckedFunction(newFields,count);
+    newFields = newFields.filter(function(element){
+      return newFields !== undefined; 
+    });
+    props.subCheckedFunction(newFields,flag,item);
   };
   
-
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  function handleChangePage(event, newPage) {
-    setPage(newPage);
-  }
-
-  function handleChangeRowsPerPage(event) {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  }
-
+  if(props.dataFromParent !== 'undefined' && props.dataFromParent > 0){
   return (
     
       <div style={{ width: '100%' }}>
@@ -141,4 +134,7 @@ export default function SubjectTables(props,subCheckedFunction) {
       </div>
     
   );
+  }else{
+    return(<html></html>)
+  }
 }

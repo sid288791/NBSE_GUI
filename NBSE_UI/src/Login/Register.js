@@ -93,18 +93,23 @@ handleInputChange(e) {
     this.setState({dobVal: dob.value})
   }
 
-  subCheckedFunction = (subArray,count) =>{
-    console.log(this.state.subFeesVal);
-    console.log(count);
+  subCheckedFunction = (subArray,flag,item) =>{
+    
+    for(var i=0;i<subArray.length;i++){
+          if(flag === true && subArray[i].data === item){
+            subArray.splice(i,1);
+       
+        }
+    }
     if(this.state.subFeesVal.length === 0){
       alert("Please select the number of subject for which you have paid fees");
     }else{
-      if(this.state.subFeesVal > count){
+      if(this.state.subFeesVal >= subArray.length){
     console.log(subArray);
     this.finalSubArray = subArray
     console.log(this.finalSubArray);
       }else{
-        alert("Please select only " +this.state.subFeesVal + " for which you have paid fees otherwise only first "+this.state.subFeesVal + " subjects will be considered");
+        alert("Please select only " +this.state.subFeesVal + " subject for which you have paid fees otherwise only "+this.state.subFeesVal + " subjects will be considered");
       }
     }
     
