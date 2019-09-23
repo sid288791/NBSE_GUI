@@ -26,7 +26,8 @@ class MobileNumber extends React.Component{
     }
 
     handleClick(event,role){
-        var apiBaseUrl = "http://localhost:4000/api/";
+       // var apiBaseUrl = "http://localhost:4000/api/";
+        var apiBaseUrl = " http://18.189.141.222:8081/api/v1"
         // console.log("values in register handler",role);
         var self = this;
         if(this.state.mobile_number.length>0 ){
@@ -34,7 +35,8 @@ class MobileNumber extends React.Component{
                 "mobile_number": this.state.mobile_number,
                 "role":role
             }
-            axios.post(apiBaseUrl+'/sendOTP', payload)
+            //axios.post(apiBaseUrl+'/sendOTP', payload)
+            axios.get(apiBaseUrl+'/sendSMS?mobileNumber='+this.state.mobile_number.slice(4,9)+this.state.mobile_number.slice(10,15))
      .then((response) =>{
        console.log(response);
        if(response.status === 200){

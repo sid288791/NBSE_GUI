@@ -36,11 +36,14 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
+  createData('Mathematics Standard', "041", 6.0, 24, 4.0),
+  createData('Mathematics Basic', "241", 9.0, 37, 4.3),
+  createData('Science', "086", 16.0, 24, 6.0),
+  createData('Social Science', "087", 3.7, 67, 4.3),
+  createData('English', "184", 16.0, 49, 3.9),
+  createData('Hindi-A', "185", 16.0, 49, 3.9),
+  createData('Hindi-B', "085", 16.0, 49, 3.9),
+  createData('Sanskrit', "122", 16.0, 49, 3.9),
 ];
 
 const useStyles = makeStyles(theme => ({

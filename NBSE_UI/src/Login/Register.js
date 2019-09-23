@@ -127,7 +127,7 @@ handleInputChange(e) {
     //To be done:check for empty values before hitting submit
     if(this.state.email.length>0 && this.state.password.length>0 && this.state.file !== 'undefined'
       && this.state.stu_name.length>0 && this.state.mother_name.length>0 && 
-      this.state.mother_num.length>0 && this.state.father_num.length>0 
+      this.state.mother_num.length>0 && this.state.father_name.length>0 
       && this.state.father_num.length>0 && this.state.dob !== 'undefined' && this.state.classVal !== 'undefined'
        && this.state.subFeesVal !== 'undefined'  && this.state.schoolCodeVal.length>0 && this.finalSubArray.length>0){
         
@@ -140,9 +140,9 @@ handleInputChange(e) {
         formData.append('password',this.state.password);
         formData.append('stu_name',this.state.stu_name);
         formData.append('mother_name',this.state.mother_name);
-        formData.append('mother_num',this.state.mother_num);
+        formData.append('mother_num',this.state.mother_num.slice(4,9)+this.state.mother_num.slice(10,15));
         formData.append('father_name',this.state.father_name);
-        formData.append('father_num',this.state.father_num);
+        formData.append('father_num',this.state.father_num.slice(4,9)+this.state.father_num.slice(10,15));
         formData.append('dob',this.state.dob);
         formData.append('classVal',this.state.classVal);
         formData.append('subFeesVal',this.state.subFeesVal);
