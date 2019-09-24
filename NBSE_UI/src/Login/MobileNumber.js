@@ -29,6 +29,7 @@ class MobileNumber extends React.Component{
        // var apiBaseUrl = "http://localhost:4000/api/";
         var apiBaseUrl = " http://18.189.141.222:8081/api/v1"
         // console.log("values in register handler",role);
+        var mNum = this.state.mobile_number.slice(4,9)+this.state.mobile_number.slice(10,15);
         var self = this;
         if(this.state.mobile_number.length>0 ){
             var payload={
@@ -40,7 +41,8 @@ class MobileNumber extends React.Component{
      .then((response) =>{
        console.log(response);
        if(response.status === 200){
-         this.props.history.push("/VerifyOTP",{ role : role})
+         console.log(mNum);
+         this.props.history.push("/VerifyOTP",{ role : role,mNum :mNum})
        }
        else{
         console.log("some error ocurred",response.status);

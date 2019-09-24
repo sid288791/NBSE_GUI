@@ -16,17 +16,20 @@ class VerifyOTP extends React.Component{
 
     }
 
-    handleClick(event,param,role){
+    handleClick(event,param,role,mNum){
         if(param === 'resend'){
             this.props.history.push("/resendOTP",{ role : role});
         }else{
-        var apiBaseUrl = "http://localhost:4000/api/";
+            console.log(mNum)
+        var apiBaseUrl = "http://18.189.141.222:8081/api/v1";
         var self = this;
         if(this.state.otp.length>0){
             var payload={
                 "otp": this.state.otp
             }
-            axios.post(apiBaseUrl+'/verifyOTP', payload)
+            console.log(this.props.location.state.mNum);
+            //axios.post(apiBaseUrl+'/verifyOTP', payload)
+            axios.get(apiBaseUrl+'/verifyOTP?mobileNumber='+mNum+"&"+"otp="+this.state.otp)
             .then((response) => {
                 console.log(response);
                 if(response.status === 200){
@@ -62,7 +65,7 @@ class VerifyOTP extends React.Component{
              onChange = {(event,newValue) => this.setState({otp:newValue})}
              />
              <br/>
-           <RaisedButton label="verify" primary={true} style={style} onClick={(event) => this.handleClick(event,'verify',this.props.location.state.role)}/>
+           <RaisedButton label="verify" primary={true} style={style} onClick={(event) => this.handleClick(event,'verify',this.props.location.state.role,this.props.location.state.mNum)}/>
            <br/>
           <RaisedButton label="Resend OTP" primary={true} style={style} onClick={(event) => this.handleClick(event,'resend',this.props.location.state.role)}/>
              </div>
