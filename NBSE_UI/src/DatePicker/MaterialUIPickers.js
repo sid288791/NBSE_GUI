@@ -31,6 +31,7 @@ export default function MaterialUIPickers(props,setDate) {
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
+          style={{width: 500}}
         />
         
       </Grid>

@@ -15,10 +15,12 @@ import MuiPhoneNumber from 'material-ui-phone-number'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import FormControl from "@material-ui/core/FormControl";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {withRouter} from "react-router-dom";
 import Checkbox from '@material-ui/core/Checkbox';
+import Typography from 'material-ui/styles/typography';
 
 
 
@@ -33,6 +35,14 @@ const Styles = theme => ({
   },
   gridContainer:{
     marginTop: '1em'
+  },
+  header:{
+    textAlign: 'center',
+    backgroundColor: '#61dafb',
+    color:'white',
+    padding:'0.8rem',
+    borderRadius:'8px 8px 0px 0px',
+    variant:'h2'
   }
 });
 
@@ -55,6 +65,7 @@ class Register extends Component {
       schoolCodeVal : '',
       file: '',
       dobVal: '',
+      oathVal:'',
     }
   }
 
@@ -79,6 +90,9 @@ callbackFunctionForSubFees = (subfeesdropdowndData) => {
 
  handleOathCheck = name => event => {
    if(event.target.checked){
+     console.log(event.target.checked)
+     this.setState({oathVal:event.target.value})
+    // console.log(this.state.oathVal);
 
    }
  // setState({ ...state, [name]: event.target.checked });
@@ -159,6 +173,7 @@ handleInputChange(e) {
     // console.log("values in register handler",role);
     var self = this;
     //To be done:check for empty values before hitting submit
+    if(this.state.oathVal.length>0){
     if(this.state.email.length>0 && this.state.password.length>0 && this.state.file !== 'undefined'
       && this.state.stu_name.length>0 && this.state.mother_name.length>0 && 
       this.state.mother_num.length>0 && this.state.father_name.length>0 
@@ -216,6 +231,9 @@ handleInputChange(e) {
     else{
       alert("Input field value is missing");
     }
+  }else{
+    alert("Please check oath check box");
+  }
 
   }
   render() {
@@ -238,27 +256,37 @@ handleInputChange(e) {
         <MuiThemeProvider>
           <div>
           <AppBar
-             title="Register"
+             title="NBSE"
            />
            <br></br>
            <div>
              <Grid container justify="center" className={classes.gridContainer} spacing={3}>
+             <Grid item xs={10} style={{maxWidth:'1000px'}}>
+                <Paper className={classes.header} variant="h2">
+                  NBSE Registeration
+                  </Paper>
+                  </Grid>
               <Grid item xs={10} style={{maxWidth:'1000px'}}>
                 <Paper className={classes.paper}>
+                  
            <form onSubmit={(event) => this.handleClick(event,this.props.role)}>
+          
            <TextField
              hintText="Enter your Name"
              floatingLabelText="Student Name"
              onChange = {this.toInputUppercaseForStuName}
+             style={{width: 500}}
              />
            <br/>
            <TextField
              hintText="Enter your Mother Name"
              floatingLabelText="Mother Name"
              onChange = {this.toInputUppercaseForMotherName}
+             style={{width: 500}}
              />
              <br/>
              <br/>
+             <FormControl style={{minWidth: 500}}>
              <MuiPhoneNumber
              name="motherNum"
              data-cy="user-phone"
@@ -267,16 +295,20 @@ handleInputChange(e) {
              label="Mother Phone Number"
              value={this.state.motherNum}
            // floatingLabelText="Mother Phone Number"
-            onChange={this.handleMotherNum} ></MuiPhoneNumber>
+            onChange={this.handleMotherNum} 
+            ></MuiPhoneNumber>
+            </FormControl>
              
            <br/>
            <TextField
              hintText="Enter your Father Name"
              floatingLabelText="Father Name"
              onChange = {this.toInputUppercaseForFatherName}
+             style={{width: 500}}
              />
            <br/>
            <br/>
+           <FormControl style={{minWidth: 500}}>
            <MuiPhoneNumber
              name="fatherNum"
              data-cy="user-phone"
@@ -286,12 +318,15 @@ handleInputChange(e) {
              value={this.state.fatherNum}
            // floatingLabelText="Mother Phone Number"
             onChange={this.handleFatherNum} 
-            margin ="normal"></MuiPhoneNumber>
+            margin ="normal"
+            style={{width: 500}}></MuiPhoneNumber>
+            </FormControl>
         <br/>
            <TextField
              hintText={userhintText}
              floatingLabelText={userLabel}
              onChange = {(event,newValue) => this.setState({email:newValue})}
+             style={{width: 500}}
              />
            <br/>
            <TextField
@@ -299,6 +334,7 @@ handleInputChange(e) {
              hintText="Enter your Password"
              floatingLabelText="Password"
              onChange = {(event,newValue) => this.setState({password:newValue})}
+             style={{width: 500}}
              />
            <br/>
              <MaterialUIPickers type = "dob"
@@ -321,8 +357,8 @@ handleInputChange(e) {
            <br/>
            <Checkbox
         //checked={true}
-        onChange={this.handleOathCheck('checkedB')}
-        value="checkedB"
+        onChange={this.handleOathCheck('checkedOath')}
+        value="checkedOath"
         color="primary"
         inputProps={{
           'aria-label': 'secondary checkbox',

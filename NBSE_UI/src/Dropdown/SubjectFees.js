@@ -12,7 +12,7 @@ import Dialog from "@material-ui/core/Dialog";
 const styles = theme => ({
   formControl: {
     margin: theme.spacing.unit,
-    minWidth: 240
+    minWidth: 500
   }
 });
 

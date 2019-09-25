@@ -25,6 +25,14 @@ const Styles = theme => ({
   },
   gridContainer:{
     marginTop: '4em'
+  },
+  header:{
+    textAlign: 'center',
+    backgroundColor: '#61dafb',
+    color:'white',
+    padding:'0.8rem',
+    borderRadius:'8px 8px 0px 0px',
+    variant:'h2'
   }
 });
 
@@ -82,12 +90,17 @@ class VerifyOTP extends React.Component{
             <MuiThemeProvider>
             <div>
             <AppBar
-               title="Verify OTP"
+               title="NBSE"
              />
             <br/>
             <div>
             <Grid container justify="center" className={classes.gridContainer} spacing={3}>
-              <Grid item xs={4} style={{maxWidth:'1000px'}}>
+            <Grid item xs={10} style={{maxWidth:'1000px'}}>
+                <Paper className={classes.header} variant="h2">
+                  Verify OTP
+                  </Paper>
+                  </Grid>
+              <Grid item xs={10} style={{maxWidth:'1000px'}}>
                 <Paper className={classes.paper}>
         <TextField
              hintText="Please provide OTP"

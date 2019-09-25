@@ -124,7 +124,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     height: 150,
-    minWidth: 290,
+    minWidth: 500,
   },
   input: {
     display: 'flex',
@@ -452,7 +452,7 @@ export default function SchoolAutosuggest(props) {
 
   return (
     <div className={classes.root}>
-      <FormControl style={{minWidth: 260}}>
+      <FormControl style={{minWidth: 500}}>
         <Select
           classes={classes}
           styles={selectStyles}
@@ -479,6 +479,7 @@ export default function SchoolAutosuggest(props) {
         label="School Code"
         value={idval}
         margin="normal"
+        style={{width: 500}}
              />}
        </FormControl>  </div>
   );
