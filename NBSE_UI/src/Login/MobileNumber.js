@@ -9,15 +9,39 @@ import VerifyOTP from './VerifyOTP';
 //import history from "./history";
 import {withRouter} from "react-router-dom";
 import MuiPhoneNumber from 'material-ui-phone-number'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
+
+
+const Styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  gridContainer:{
+    marginTop: '4em'
+  }
+});
 
 class MobileNumber extends React.Component{
+  
     constructor(props){
         super(props);
         this.state ={
             mobile_number:''
         }
     }
+    static propTypes = {
+      classes: PropTypes.object.isRequired
+  };
 
     handleMobileNum=(value)=>{
       console.log(value);
@@ -54,6 +78,7 @@ class MobileNumber extends React.Component{
     }
 
     render(){
+      const { classes } = this.props;
       var userhintText,userLabel;
       if(this.props.role === "student"){
         userhintText="Enter your Mobile Number";
@@ -65,14 +90,18 @@ class MobileNumber extends React.Component{
       }
         return(
             <div>
+           
             <MuiThemeProvider>
             <div>
             <AppBar
                title="Mobile Number"
              />
              <br/>
-
-    <MuiPhoneNumber
+             <div>
+             <Grid container justify="center" className={classes.gridContainer} spacing={3}>
+              <Grid item xs={4} style={{maxWidth:'1000px'}}>
+                <Paper className={classes.paper}>
+                  <MuiPhoneNumber
              name="mobileNum"
              data-cy="user-phone"
              defaultCountry={"in"}
@@ -84,6 +113,10 @@ class MobileNumber extends React.Component{
             margin ="normal"></MuiPhoneNumber>
              <br/>
            <RaisedButton label="Send OTP" primary={true} style={style} onClick={(event) => this.handleClick(event,this.props.role)}/>
+             </Paper>
+             </Grid>
+             </Grid>
+             </div>
              </div>
             </MuiThemeProvider>
             </div>
@@ -96,5 +129,5 @@ const style = {
   };
 
 //export default MobileNumber;
-export default withRouter(MobileNumber);
+export default withRouter(withStyles(Styles, { withTheme: true })(MobileNumber));
 

@@ -25,7 +25,7 @@ export default function MaterialUIPickers(props,setDate) {
           margin="normal"
           id="dob"
           label="DOB"
-          format="MM/dd/yyyy"
+          format="dd/MM/yyyy"
           value={selectedDate}
           onChange={handleDateChange}
           KeyboardButtonProps={{

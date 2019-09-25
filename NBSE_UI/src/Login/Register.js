@@ -12,6 +12,27 @@ import SubjectTables from '../Table/SubjectTable';
 import SubjectFess from '../Dropdown/SubjectFees';
 import MediaCapture from '../File/MediaCapture ';
 import MuiPhoneNumber from 'material-ui-phone-number'
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import {withRouter} from "react-router-dom";
+
+
+const Styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  gridContainer:{
+    marginTop: '1em'
+  }
+});
 
 class Register extends Component {
   constructor(props){
@@ -34,6 +55,10 @@ class Register extends Component {
       dobVal: '',
     }
   }
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+};
 
   finalSubArray = []
   
@@ -185,6 +210,8 @@ handleInputChange(e) {
 
   }
   render() {
+    const { classes } = this.props;
+
     // console.log("props",this.props);
     var userhintText,userLabel,idval;
     console.log(this.props.location.state);
@@ -204,6 +231,11 @@ handleInputChange(e) {
           <AppBar
              title="Register"
            />
+           <br></br>
+           <div>
+             <Grid container justify="center" className={classes.gridContainer} spacing={3}>
+              <Grid item xs={10} style={{maxWidth:'1000px'}}>
+                <Paper className={classes.paper}>
            <form onSubmit={(event) => this.handleClick(event,this.props.role)}>
            <TextField
              hintText="Enter your Name"
@@ -283,6 +315,10 @@ handleInputChange(e) {
           </RaisedButton>
            
            </form>
+           </Paper>
+           </Grid>
+           </Grid>
+           </div>
           </div>
          </MuiThemeProvider>
       </div>
@@ -294,4 +330,4 @@ const style = {
   margin: 15,
 };
 
-export default Register;
+export default withRouter(withStyles(Styles, { withTheme: true })(Register));

@@ -6,7 +6,26 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 var apiBaseUrl = "http://localhost:4000/api/";
+
+const Styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  gridContainer:{
+    marginTop: '4em'
+  }
+});
 
 //import UploadPage from './UploadPage';
 class Login extends Component {
@@ -41,6 +60,9 @@ class Login extends Component {
       loginRole:'student'
     }
   }
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+};
   componentWillMount(){
   // console.log("willmount prop values",this.props);
   if(this.props.role !== undefined){
@@ -181,6 +203,8 @@ class Login extends Component {
                    loginRole:loginRole})
   }
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
         <MuiThemeProvider>
@@ -188,6 +212,9 @@ class Login extends Component {
              title="Login"
            />
         </MuiThemeProvider>
+        <Grid container justify="center" className={classes.gridContainer} spacing={3}>
+              <Grid item xs={4} style={{maxWidth:'1000px'}}>
+                <Paper className={classes.paper}>
         <MuiThemeProvider>
         <div>
         <p>Login as:</p>
@@ -195,9 +222,13 @@ class Login extends Component {
           <MenuItem value={1} primaryText="Student" />
           <MenuItem value={2} primaryText="Teacher" />
         </DropDownMenu>
+        
         </div>
         </MuiThemeProvider>
         {this.state.loginComponent}
+        </Paper>
+        </Grid>
+        </Grid>
       </div>
     );
   }
@@ -207,4 +238,4 @@ const style = {
   margin: 15,
 };
 
-export default Login;
+export default withStyles(Styles, { withTheme: true })(Login);

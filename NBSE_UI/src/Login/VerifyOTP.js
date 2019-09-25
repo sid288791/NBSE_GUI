@@ -6,6 +6,27 @@ import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import Register from './Register';
 import {withRouter} from "react-router-dom";
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+
+
+const Styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  gridContainer:{
+    marginTop: '4em'
+  }
+});
 
 class VerifyOTP extends React.Component{
     constructor(props){
@@ -15,6 +36,9 @@ class VerifyOTP extends React.Component{
         }
 
     }
+    static propTypes = {
+        classes: PropTypes.object.isRequired
+    };
 
     handleClick(event,param,role,mNum){
         if(param === 'resend'){
@@ -50,6 +74,8 @@ class VerifyOTP extends React.Component{
     }
 
     render(){
+        const { classes } = this.props;
+
         console.log(this.props.location.state.role);
         return(
             <div>
@@ -58,7 +84,11 @@ class VerifyOTP extends React.Component{
             <AppBar
                title="Verify OTP"
              />
-
+            <br/>
+            <div>
+            <Grid container justify="center" className={classes.gridContainer} spacing={3}>
+              <Grid item xs={4} style={{maxWidth:'1000px'}}>
+                <Paper className={classes.paper}>
         <TextField
              hintText="Please provide OTP"
              floatingLabelText="Enter OTP"
@@ -68,6 +98,10 @@ class VerifyOTP extends React.Component{
            <RaisedButton label="verify" primary={true} style={style} onClick={(event) => this.handleClick(event,'verify',this.props.location.state.role,this.props.location.state.mNum)}/>
            <br/>
           <RaisedButton label="Resend OTP" primary={true} style={style} onClick={(event) => this.handleClick(event,'resend',this.props.location.state.role)}/>
+            </Paper>
+            </Grid>
+            </Grid>
+            </div>
              </div>
             </MuiThemeProvider>
             </div>
@@ -79,4 +113,4 @@ const style = {
     margin: 15,
   };
 
-export default VerifyOTP;
+export default withStyles(Styles, { withTheme: true })(VerifyOTP);
