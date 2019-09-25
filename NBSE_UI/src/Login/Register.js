@@ -18,6 +18,8 @@ import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {withRouter} from "react-router-dom";
+import Checkbox from '@material-ui/core/Checkbox';
+
 
 
 const Styles = theme => ({
@@ -74,6 +76,13 @@ callbackFunction = (classdropdowndData) => {
 callbackFunctionForSubFees = (subfeesdropdowndData) => {
       this.setState({subFeesVal: subfeesdropdowndData})
 }
+
+ handleOathCheck = name => event => {
+   if(event.target.checked){
+
+   }
+ // setState({ ...state, [name]: event.target.checked });
+};
 
 //state = { schoolCodeVal: "" }
 callbackFunctionForSchoolCode = (schoolCodedropdowndData) => {
@@ -310,6 +319,16 @@ handleInputChange(e) {
            
            <MediaCapture parentCallback = {this.callbackFunctionForImage}/>
            <br/>
+           <Checkbox
+        //checked={true}
+        onChange={this.handleOathCheck('checkedB')}
+        value="checkedB"
+        color="primary"
+        inputProps={{
+          'aria-label': 'secondary checkbox',
+        }}
+      /><span>I hereby accept all rule and regulation of NBSE. I am appearing in only those exas which I have paid for. All particulars filled abive including photo and payment details are correct. Please issue me an Admit card.</span>
+      <br/>
            <RaisedButton primary={true} style={style} type="submit" className="button">
             Register
           </RaisedButton>
