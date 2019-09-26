@@ -41,7 +41,7 @@ class SubjectFess extends React.Component {
       <form className={classes.root} autoComplete="off">
         <FormControl variant="outlined" className={classes.formControl}>
           <InputLabel ref={this.InputLabelRef} htmlFor="outlined-subfees-simple">
-            Subject Fees Paid
+          In How many Subjects you have paid fees in School?
           </InputLabel>
           <Select
             value={this.state.subfees}
@@ -62,9 +62,6 @@ class SubjectFess extends React.Component {
             <MenuItem value={3}>3</MenuItem>
             <MenuItem value={4}>4</MenuItem>
             <MenuItem value={5}>5</MenuItem>
-            <MenuItem value={6}>6</MenuItem>
-            <MenuItem value={7}>7</MenuItem>
-            <MenuItem value={8}>8</MenuItem>
           </Select>
         </FormControl>
       </form>

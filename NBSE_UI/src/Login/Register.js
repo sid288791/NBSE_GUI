@@ -66,6 +66,7 @@ class Register extends Component {
       file: '',
       dobVal: '',
       oathVal:'',
+      repassword: '',
     }
   }
 
@@ -173,6 +174,11 @@ handleInputChange(e) {
     // console.log("values in register handler",role);
     var self = this;
     //To be done:check for empty values before hitting submit
+    if(this.state.password !== this.state.repassword){
+      alert("The password you entered did not match ");
+      return false;
+
+    }
     if(this.state.oathVal.length>0){
     if(this.state.email.length>0 && this.state.password.length>0 && this.state.file !== 'undefined'
       && this.state.stu_name.length>0 && this.state.mother_name.length>0 && 
@@ -277,29 +283,7 @@ handleInputChange(e) {
              onChange = {this.toInputUppercaseForStuName}
              style={{width: 500}}
              />
-           <br/>
-           <TextField
-             hintText="Enter your Mother Name"
-             floatingLabelText="Mother Name"
-             onChange = {this.toInputUppercaseForMotherName}
-             style={{width: 500}}
-             />
              <br/>
-             <br/>
-             <FormControl style={{minWidth: 500}}>
-             <MuiPhoneNumber
-             name="motherNum"
-             data-cy="user-phone"
-             defaultCountry={"in"}
-             id="standard-number"
-             label="Mother Phone Number"
-             value={this.state.motherNum}
-           // floatingLabelText="Mother Phone Number"
-            onChange={this.handleMotherNum} 
-            ></MuiPhoneNumber>
-            </FormControl>
-             
-           <br/>
            <TextField
              hintText="Enter your Father Name"
              floatingLabelText="Father Name"
@@ -321,6 +305,28 @@ handleInputChange(e) {
             margin ="normal"
             style={{width: 500}}></MuiPhoneNumber>
             </FormControl>
+           <br/>
+           <TextField
+             hintText="Enter your Mother Name"
+             floatingLabelText="Mother Name"
+             onChange = {this.toInputUppercaseForMotherName}
+             style={{width: 500}}
+             />
+             <br/>
+             <br/>
+             <FormControl style={{minWidth: 500}}>
+             <MuiPhoneNumber
+             name="motherNum"
+             data-cy="user-phone"
+             defaultCountry={"in"}
+             id="standard-number"
+             label="Mother Phone Number"
+             value={this.state.motherNum}
+           // floatingLabelText="Mother Phone Number"
+            onChange={this.handleMotherNum} 
+            ></MuiPhoneNumber>
+            </FormControl>
+           
         <br/>
            <TextField
              hintText={userhintText}
@@ -334,6 +340,14 @@ handleInputChange(e) {
              hintText="Enter your Password"
              floatingLabelText="Password"
              onChange = {(event,newValue) => this.setState({password:newValue})}
+             style={{width: 500}}
+             />
+           <br/>
+           <TextField
+             type = "password"
+             hintText="Enter your Password"
+             floatingLabelText="Reconfirm Password"
+             onChange = {(event,newValue) => this.setState({repassword:newValue})}
              style={{width: 500}}
              />
            <br/>
@@ -354,6 +368,8 @@ handleInputChange(e) {
            <br/>
            
            <MediaCapture parentCallback = {this.callbackFunctionForImage}/>
+           <br/>
+           <span>*If your school is not appearing here call or whatsapp on 7838594590</span>
            <br/>
            <Checkbox
         //checked={true}

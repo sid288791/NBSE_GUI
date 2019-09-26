@@ -41,7 +41,7 @@ const rows = [
   createData('Science', "086", 16.0, 24, 6.0),
   createData('Social Science', "087", 3.7, 67, 4.3),
   createData('English', "184", 16.0, 49, 3.9),
-  createData('Hindi-A', "185", 16.0, 49, 3.9),
+  createData('Hindi-A', "002", 16.0, 49, 3.9),
   createData('Hindi-B', "085", 16.0, 49, 3.9),
   createData('Sanskrit', "122", 16.0, 49, 3.9),
 ];
