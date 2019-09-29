@@ -194,6 +194,8 @@ handleInputChange(e) {
     //   return false;
 
     // }
+    
+
     console.log(this.props.location.state.mNum);
     console.log(this.state.file);
     console.log(this.state.mother_num);
@@ -224,7 +226,8 @@ handleInputChange(e) {
         formData.append('stu_num',this.props.location.state.mNum);
         const config = {
           headers: {
-              'content-type': 'multipart/form-data'
+           // 'enctype': 'multipart/form-data'
+            'content-type': 'multipart/form-data'
           }
       };
 
@@ -234,6 +237,7 @@ handleInputChange(e) {
      .then((response) => {
        console.log(response);
        if(response.status === 200){
+         alert("You have successfully registered");
         this.props.history.push("/login", { role : role});
         //  console.log("registration successfull");
          var loginscreen=[];
