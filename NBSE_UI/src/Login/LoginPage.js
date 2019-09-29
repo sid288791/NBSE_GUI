@@ -27,7 +27,7 @@ const Styles = theme => ({
   },
   header:{
     textAlign: 'center',
-    backgroundColor: '#61dafb',
+    backgroundColor: '#31bee5',
     color:'white',
     padding:'0.8rem',
     borderRadius:'8px 8px 0px 0px',

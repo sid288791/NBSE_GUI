@@ -13,8 +13,9 @@ export default function MaterialUIPickers(props,setDate) {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
 
   function handleDateChange(date) {
+    var dates = new Date(date)
     setSelectedDate(date);
-    props.setDate(date);
+    props.setDate(dates.getDate() + '/' +  (dates.getMonth() + 1)  + '/' +  dates.getFullYear());
   }
 
   return (

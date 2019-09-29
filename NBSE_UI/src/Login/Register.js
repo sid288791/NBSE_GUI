@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {withRouter} from "react-router-dom";
 import Checkbox from '@material-ui/core/Checkbox';
-import Typography from 'material-ui/styles/typography';
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 
 
 
@@ -38,12 +38,16 @@ const Styles = theme => ({
   },
   header:{
     textAlign: 'center',
-    backgroundColor: '#61dafb',
+    backgroundColor: '#31bee5',
     color:'white',
     padding:'0.8rem',
     borderRadius:'8px 8px 0px 0px',
     variant:'h2'
-  }
+  },
+  radio: {
+    cursor: 'pointer',
+    color: '#282c34'
+}
 });
 
 class Register extends Component {
@@ -67,6 +71,9 @@ class Register extends Component {
       dobVal: '',
       oathVal:'',
       repassword: '',
+      payMore: '',
+      moreSubFeesVal: '',
+      stu_num: ''
     }
   }
 
@@ -93,13 +100,10 @@ callbackFunctionForSubFees = (subfeesdropdowndData) => {
    if(event.target.checked){
      console.log(event.target.checked)
      this.setState({oathVal:event.target.value})
-    // console.log(this.state.oathVal);
 
    }
- // setState({ ...state, [name]: event.target.checked });
 };
 
-//state = { schoolCodeVal: "" }
 callbackFunctionForSchoolCode = (schoolCodedropdowndData) => {
       this.setState({schoolCodeVal: schoolCodedropdowndData})
 }
@@ -107,6 +111,14 @@ toInputUppercaseForStuName = e =>{
    e.target.value = (""+ e.target.value).toUpperCase();
     this.setState({stu_name:e.target.value});
 
+ }
+
+ setPayMore = e =>{
+   this.setState({payMore:e.target.value})
+ }
+
+ onMoreSubChange = moreSubFees =>{
+   this.setState({moreSubFeesVal:moreSubFees});
  }
 
  toInputUppercaseForMotherName = e =>{
@@ -169,28 +181,34 @@ handleInputChange(e) {
   }
 
 
-  handleClick(event,role){
-    var apiBaseUrl = "http://localhost:4000/api/";
+  handleClick(event,role,mNum){
+    var apiBaseUrl = "http://18.189.141.222:8081/api/v1";
     // console.log("values in register handler",role);
     var self = this;
-    //To be done:check for empty values before hitting submit
-    if(this.state.password !== this.state.repassword){
-      alert("The password you entered did not match ");
-      return false;
+    //console.log(this.state.payMore);
+    //console.log(this.state.moreSubFeesVal);
 
-    }
+    //To be done:check for empty values before hitting submit
+    // if(this.state.password !== this.state.repassword){
+    //   alert("The password you entered did not match ");
+    //   return false;
+
+    // }
+    console.log(this.props.location.state.mNum);
+    console.log(this.state.file);
+    console.log(this.state.mother_num);
+    console.log(this.state.password);
+    
     if(this.state.oathVal.length>0){
-    if(this.state.email.length>0 && this.state.password.length>0 && this.state.file !== 'undefined'
-      && this.state.stu_name.length>0 && this.state.mother_name.length>0 && 
-      this.state.mother_num.length>0 && this.state.father_name.length>0 
+    if(this.state.email.length>0 &&  this.state.stu_name.length>0 && this.state.mother_name.length>0 && this.state.father_name.length>0 
       && this.state.father_num.length>0 && this.state.dob !== 'undefined' && this.state.classVal !== 'undefined'
        && this.state.subFeesVal !== 'undefined'  && this.state.schoolCodeVal.length>0 && this.finalSubArray.length>0){
         
          // Prevent default behavior
         event.preventDefault();
-
+        
         const formData = new FormData();
-        formData.append('myImage',this.state.file);
+        formData.append('myImage', this.state.file);
         formData.append('email',this.state.email);
         formData.append('password',this.state.password);
         formData.append('stu_name',this.state.stu_name);
@@ -203,6 +221,7 @@ handleInputChange(e) {
         formData.append('subFeesVal',this.state.subFeesVal);
         formData.append('schoolCodeVal',this.state.schoolCodeVal);
         formData.append('subFeesArray',this.finalSubArray);
+        formData.append('stu_num',this.props.location.state.mNum);
         const config = {
           headers: {
               'content-type': 'multipart/form-data'
@@ -211,7 +230,7 @@ handleInputChange(e) {
 
 
      
-      axios.post(apiBaseUrl+'/register', formData,config)
+      axios.post(apiBaseUrl+'/doRegistration', formData,config)
      .then((response) => {
        console.log(response);
        if(response.status === 200){
@@ -235,10 +254,13 @@ handleInputChange(e) {
      });
     }
     else{
+      this.props.history.push("/register", { role : role});
       alert("Input field value is missing");
     }
   }else{
+    this.props.history.push("/register", { role : role});
     alert("Please check oath check box");
+    this.props.history.push("/register", { role : role});
   }
 
   }
@@ -248,14 +270,14 @@ handleInputChange(e) {
     // console.log("props",this.props);
     var userhintText,userLabel,idval;
     console.log(this.props.location.state);
-    if(this.props.location.state.role === "student"){
+    //if(this.props.location.state.role === "student"){
       userhintText="Enter your Email Id";
       userLabel="Student Email Id";
-    }
-    else{
-      userhintText="Enter your Email Id";
-      userLabel="Teacher Email Id";
-    }
+    // }
+    // else{
+    //   userhintText="Enter your Email Id";
+    //   userLabel="Teacher Email Id";
+    // }
     return (
       
       <div>
@@ -334,7 +356,7 @@ handleInputChange(e) {
              onChange = {(event,newValue) => this.setState({email:newValue})}
              style={{width: 500}}
              />
-           <br/>
+           {/* <br/>
            <TextField
              type = "password"
              hintText="Enter your Password"
@@ -349,7 +371,7 @@ handleInputChange(e) {
              floatingLabelText="Reconfirm Password"
              onChange = {(event,newValue) => this.setState({repassword:newValue})}
              style={{width: 500}}
-             />
+             /> */}
            <br/>
              <MaterialUIPickers type = "dob"
              hintText="Enter your DOB"
@@ -361,15 +383,41 @@ handleInputChange(e) {
            <br/>
              <SchooldAutosuggest props = {this.props}
                parentCallback = {this.callbackFunctionForSchoolCode} />
-
+               <div>
+           <span style = {{fontWeight:'bold'}}>*If your school is not appearing here call or whatsapp on 7838594590</span>
+           </div>
+           <br/>
+            
            <SubjectFess parentCallback = {this.callbackFunctionForSubFees}/>
         
            <SubjectTables props = {this.props} dataFromParent = {this.state.subFeesVal}  subCheckedFunction = {this.subCheckedFunction.bind(this)} />
            <br/>
            
-           <MediaCapture parentCallback = {this.callbackFunctionForImage}/>
-           <br/>
-           <span>*If your school is not appearing here call or whatsapp on 7838594590</span>
+           <MediaCapture parentCallback = {this.callbackFunctionForImage}/><label style = {{fontWeight:'bold'}}>{this.state.file.name}</label>
+           {/* <div>
+           <span>Do you want to add more Subjects :</span>
+           <input type="radio" name="paymore" value="yes" onChange = {this.setPayMore}/>Yes
+            <input type="radio" name="paymore" value="no" onChange = {this.setPayMore}/>No
+            </div>
+            <br/>{this.state.payMore === 'yes' &&
+            <RadioGroup onChange={ this.onMoreSubChange } horizontal>
+             <RadioButton value="1">
+                1
+             </RadioButton>
+           <RadioButton value="2">
+               2
+           </RadioButton>
+          <RadioButton value="3">
+            3
+          </RadioButton>
+          <RadioButton value="4">
+            4
+          </RadioButton>
+          <RadioButton value="5">
+            5
+          </RadioButton>
+         
+        </RadioGroup>} */}
            <br/>
            <Checkbox
         //checked={true}
@@ -379,7 +427,7 @@ handleInputChange(e) {
         inputProps={{
           'aria-label': 'secondary checkbox',
         }}
-      /><span>I hereby accept all rule and regulation of NBSE. I am appearing in only those exas which I have paid for. All particulars filled abive including photo and payment details are correct. Please issue me an Admit card.</span>
+      /><span>I hereby accept all Rules & Regulation of NBSE. I am appearing in only those Subjects which I have paid for. All particulars filled above including photo & payment details are correct. <span style = {{fontWeight:'bold'}}>Please issue me an Admit Card.</span></span>
       <br/>
            <RaisedButton primary={true} style={style} type="submit" className="button">
             Register

@@ -28,7 +28,7 @@ const Styles = theme => ({
   },
   header:{
     textAlign: 'center',
-    backgroundColor: '#61dafb',
+    backgroundColor: '#31bee5',
     color:'white',
     padding:'0.8rem',
     borderRadius:'8px 8px 0px 0px',
@@ -50,7 +50,7 @@ class VerifyOTP extends React.Component{
 
     handleClick(event,param,role,mNum){
         if(param === 'resend'){
-            this.props.history.push("/resendOTP",{ role : role});
+            this.props.history.push("/resendOTP",{ role : role,mNum : mNum});
         }else{
             console.log(mNum)
         var apiBaseUrl = "http://18.189.141.222:8081/api/v1";
@@ -65,7 +65,7 @@ class VerifyOTP extends React.Component{
             .then((response) => {
                 console.log(response);
                 if(response.status === 200){
-                    this.props.history.push("/register", { role : role});
+                    this.props.history.push("/register", { role : role,mNum : mNum});
                     var registerscreen=[];
                     registerscreen.push(<Register appContext={self.props.appContext}/>);
                     self.props.appContext.setState({registerPage:[],registerscreen:registerscreen})

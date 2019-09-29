@@ -7,9 +7,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import TablePagination from '@material-ui/core/TablePagination';
-
-
 
 
 const StyledTableCell = withStyles(theme => ({
@@ -31,19 +28,19 @@ const StyledTableRow = withStyles(theme => ({
 }))(TableRow);
 
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
+function createData(name, code) {
+  return { name, code };
 }
 
 const rows = [
-  createData('Mathematics Standard', "041", 6.0, 24, 4.0),
-  createData('Mathematics Basic', "241", 9.0, 37, 4.3),
-  createData('Science', "086", 16.0, 24, 6.0),
-  createData('Social Science', "087", 3.7, 67, 4.3),
-  createData('English', "184", 16.0, 49, 3.9),
-  createData('Hindi-A', "002", 16.0, 49, 3.9),
-  createData('Hindi-B', "085", 16.0, 49, 3.9),
-  createData('Sanskrit', "122", 16.0, 49, 3.9),
+  createData('Mathematics Standard', "041"),
+  createData('Mathematics Basic', "241"),
+  createData('Science', "086"),
+  createData('Social Science', "087"),
+  createData('English', "184"),
+  createData('Hindi-A', "002"),
+  createData('Hindi-B', "085"),
+  createData('Sanskrit', "122"),
 ];
 
 const useStyles = makeStyles(theme => ({
@@ -101,7 +98,7 @@ export default function SubjectTables(props,subCheckedFunction) {
   return (
     
       <div style={{ width: '100%' }}>
-      <Table className={classes.table} style={{ width: 400, margin: 'auto' }}>
+      <Table className={classes.table} style={{ width: 500, margin: 'auto' }}>
         <TableHead>
           <TableRow>
             <StyledTableCell>Subject Name</StyledTableCell>
@@ -116,7 +113,7 @@ export default function SubjectTables(props,subCheckedFunction) {
               <StyledTableCell component="th" scope="row">
                 {row.name}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.calories}</StyledTableCell>
+              <StyledTableCell align="right">{row.code}</StyledTableCell>
               <StyledTableCell align="right">
               <Checkbox
                 // checked={state.checkedB}
