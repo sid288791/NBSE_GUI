@@ -76,8 +76,8 @@ export default function SubjectTables(props,subCheckedFunction) {
     if(event.target.checked){
      
       newFields[index] = {
-        check: !newFields[index],
-        data: item
+       // check: !newFields[index],
+        data: item.code
       }
       setState({fields: newFields})
     }else{

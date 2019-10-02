@@ -16,6 +16,7 @@ import VerifyOTP from "./Login/VerifyOTP"
 import MobileNumber from './Login/MobileNumber';
 import Register from './Login/Register';
 import Login from './Login/LoginPage';
+import Payment from './Login/Payment'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
   
 
@@ -28,6 +29,7 @@ const routing = (
         <Route path="/resendOTP" component={MobileNumber} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
+        <Route path="/payment" component={Payment} />
         <Route component={Notfound} />
       </Switch>
   </Router>

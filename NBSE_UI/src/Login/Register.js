@@ -82,6 +82,7 @@ class Register extends Component {
 };
 
   finalSubArray = []
+  finalSubCodeArray = []
   
   callbackFunctionForImage = (imagedata) => {
     this.setState({file: imagedata})
@@ -167,6 +168,9 @@ handleInputChange(e) {
     }else{
       if(this.state.subFeesVal >= subArray.length){
     console.log(subArray);
+    // for(var i =0; i< subArray.length; i++){
+    //   this.finalSubArray.push(subArray[i].data);
+    // }
     this.finalSubArray = subArray
     console.log(this.finalSubArray);
       }else{
@@ -202,9 +206,17 @@ handleInputChange(e) {
     console.log(this.state.password);
     
     if(this.state.oathVal.length>0){
+      if(this.finalSubArray.length>0){
+      for(var i = 0; i<this.finalSubArray.length;i++){
+        this.finalSubCodeArray.push(this.finalSubArray[i].data);
+      }
+    }else{
+      alert("Please select the sujects for which you have paid fees");
+      return false;
+    }
     if(this.state.email.length>0 &&  this.state.stu_name.length>0 && this.state.mother_name.length>0 && this.state.father_name.length>0 
       && this.state.father_num.length>0 && this.state.dob !== 'undefined' && this.state.classVal !== 'undefined'
-       && this.state.subFeesVal !== 'undefined'  && this.state.schoolCodeVal.length>0 && this.finalSubArray.length>0){
+       && this.state.subFeesVal !== 'undefined'  && this.state.schoolCodeVal.length>0 && this.finalSubCodeArray.length>0){
         
          // Prevent default behavior
         event.preventDefault();
@@ -222,7 +234,7 @@ handleInputChange(e) {
         formData.append('classVal',this.state.classVal);
         formData.append('subFeesVal',this.state.subFeesVal);
         formData.append('schoolCodeVal',this.state.schoolCodeVal);
-        formData.append('subFeesArray',this.finalSubArray);
+        formData.append('subFeesArray',this.finalSubCodeArray);
         formData.append('stu_num',this.props.location.state.mNum);
         const config = {
           headers: {
@@ -238,7 +250,7 @@ handleInputChange(e) {
        console.log(response);
        if(response.status === 200){
          alert("You have successfully registered");
-        this.props.history.push("/login", { role : role});
+        this.props.history.push("/payment", { role : role});
         //  console.log("registration successfull");
          var loginscreen=[];
          loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role}/>);
