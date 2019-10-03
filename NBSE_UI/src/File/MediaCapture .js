@@ -30,7 +30,11 @@ class MediaCapture extends Component {
     handleCapture = ({ target }) => {
         const fileReader = new FileReader();
         const name = target.accept.includes('image') ? 'images' : 'videos';
-
+        if(target.files[0] !== undefined){
+        if(target.files[0].size>205000){
+            alert("Please select image less than 200KB");
+        }
+        else{
         fileReader.readAsDataURL(target.files[0]);
         fileReader.onload = (e) => {
             this.setState((prevState) => ({
@@ -38,7 +42,10 @@ class MediaCapture extends Component {
             }));
         };
         this.props.parentCallback(target.files[0]);
+    }
+    }
     };
+
 
     render() {
         const { classes } = this.props;
