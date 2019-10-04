@@ -45,11 +45,13 @@ class SimpleSelect extends React.Component {
             Class
           </InputLabel>
           <Select
+          required
             value={this.state.classnum}
            // onChange={this.handleChange}
            onChange={this.handleClassDropDownChange}
             input={
               <OutlinedInput
+              required
                 labelWidth={this.state.labelWidth}
                 name="classnum"
                 id="outlined-classnum-simple"

@@ -16,6 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import FormControl from "@material-ui/core/FormControl";
+import Dialog from 'react-dialog'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import {withRouter} from "react-router-dom";
@@ -73,7 +74,8 @@ class Register extends Component {
       repassword: '',
       payMore: '',
       moreSubFeesVal: '',
-      stu_num: ''
+      stu_num: '',
+      errors: {}
     }
   }
 
@@ -83,6 +85,7 @@ class Register extends Component {
 
   finalSubArray = []
   finalSubCodeArray = []
+
   
   callbackFunctionForImage = (imagedata) => {
     this.setState({file: imagedata})
@@ -134,16 +137,17 @@ toInputUppercaseForFatherName = e =>{
 
 }
 
-handleMotherNum=(value)=>{
-  console.log(value);
+handleMotherNum= e =>{
+  console.log(e.target.value);
   //this.mother_num=value;
-  this.setState({mother_num:value});
+  this.setState({mother_num:e.target.value});
 }
 
-handleFatherNum=(value)=>{
-  console.log(value);
+handleFatherNum = e =>{
+  console.log(e.target.value);
+  this.setState({father_num:e.target.value});
   //this.mother_num=value;
-  this.setState({father_num:value});
+ // this.setState({father_num:value});
 }
 
 handleInputChange(e) {
@@ -174,7 +178,7 @@ handleInputChange(e) {
     this.finalSubArray = subArray
     console.log(this.finalSubArray);
       }else{
-        alert("Please select only " +this.state.subFeesVal + " subject for which you have paid fees otherwise only "+this.state.subFeesVal + " subjects will be considered");
+        alert("Select only " +this.state.subFeesVal + " paid subject which you have choosen in school? If you like to appear in more subjects,first complete existing registeration which you have already paid for.");
       }
     }
     
@@ -182,6 +186,41 @@ handleInputChange(e) {
 
   componentWillReceiveProps(nextProps){
     console.log("nextProps",nextProps);
+  }
+
+  handleValidation(){
+    let errors = {};
+    let formIsValid = true;
+    var self = this;
+    if(this.state.classVal.length === 0){
+      formIsValid = false;
+      errors["classVal"] = "Please select class";
+
+    }if(this.state.dob.length === 0){
+      formIsValid = false;
+      errors["dob"] = "Please select DOB";
+
+    }if(this.state.schoolCodeVal.length === 0){
+      formIsValid = false;
+      errors["schoolCodeVal"] = "Please select School";
+
+    }
+    if(this.state.subFeesVal.length === 0){
+      formIsValid = false;
+      errors["subFeesVal"] = "Please select Subject for which you have paid fees";
+
+    }
+    if(this.state.email.length>0){
+      let lastAtPos = this.state.email.lastIndexOf('@');
+           let lastDotPos = this.state.email.lastIndexOf('.');
+
+           if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.state.email.indexOf('@@') == -1 && lastDotPos > 2 && (this.state.email.length - lastDotPos) > 2)) {
+              formIsValid = false;
+              errors["email"] = "Email is not valid";
+            }
+    }
+    this.setState({errors: errors});
+       return formIsValid;
   }
 
 
@@ -198,7 +237,17 @@ handleInputChange(e) {
     //   return false;
 
     // }
-    
+
+    // Prevent default behavior
+    event.preventDefault();
+
+     if(this.handleValidation()){
+
+     }else{
+       //alert("Form has errors.");
+       return false;
+     }
+     
 
     console.log(this.props.location.state.mNum);
     console.log(this.state.file);
@@ -227,9 +276,9 @@ handleInputChange(e) {
         formData.append('password',this.state.password);
         formData.append('stu_name',this.state.stu_name);
         formData.append('mother_name',this.state.mother_name);
-        formData.append('mother_num',this.state.mother_num.slice(4,9)+this.state.mother_num.slice(10,15));
+        formData.append('mother_num',this.state.mother_num);
         formData.append('father_name',this.state.father_name);
-        formData.append('father_num',this.state.father_num.slice(4,9)+this.state.father_num.slice(10,15));
+        formData.append('father_num',this.state.father_num);
         formData.append('dob',this.state.dob);
         formData.append('classVal',this.state.classVal);
         formData.append('subFeesVal',this.state.subFeesVal);
@@ -250,7 +299,7 @@ handleInputChange(e) {
        console.log(response);
        if(response.status === 200){
          alert("You have successfully registered");
-        this.props.history.push("/payment", { role : role});
+        this.props.history.push("/payment", { role : role,loginId :response.data.loginId,loginPass :response.data.password});
         //  console.log("registration successfull");
          var loginscreen=[];
          loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role}/>);
@@ -270,15 +319,20 @@ handleInputChange(e) {
      });
     }
     else{
+      event.preventDefault();
       this.props.history.push("/register", { role : role});
+      //this.openDialog();
       alert("Input field value is missing");
     }
   }else{
+    //this.openDialog();
+     // Prevent default behavior
+     event.preventDefault();
+    // this.handleValidation()
     this.props.history.push("/register", { role : role});
     alert("Please check oath check box");
     this.props.history.push("/register", { role : role});
   }
-
   }
   render() {
     const { classes } = this.props;
@@ -316,6 +370,7 @@ handleInputChange(e) {
            <form onSubmit={(event) => this.handleClick(event,this.props.role)}>
           
            <TextField
+           required
              hintText="Enter your Name"
              floatingLabelText="Student Name"
              onChange = {this.toInputUppercaseForStuName}
@@ -323,15 +378,28 @@ handleInputChange(e) {
              />
              <br/>
            <TextField
+           required
              hintText="Enter your Father Name"
              floatingLabelText="Father Name"
              onChange = {this.toInputUppercaseForFatherName}
              style={{width: 500}}
              />
+             <br/>
+             <TextField
+           required
+             hintText="Enter your Father Mobile Number"
+             floatingLabelText="Father Mobile Number"
+             onChange = {this.handleFatherNum}
+             style={{width: 500}}
+            
+             onInput = {(e) =>{
+              e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,12)
+          }}
+             />
            <br/>
-           <br/>
-           <FormControl style={{minWidth: 500}}>
+           {/* <FormControl style={{minWidth: 500}}>
            <MuiPhoneNumber
+           required
              name="fatherNum"
              data-cy="user-phone"
              defaultCountry={"in"}
@@ -342,18 +410,32 @@ handleInputChange(e) {
             onChange={this.handleFatherNum} 
             margin ="normal"
             style={{width: 500}}></MuiPhoneNumber>
+            <span style={{color: "red"}}>{this.state.errors["f_num"]}</span>
             </FormControl>
-           <br/>
+           <br/> */}
            <TextField
+           required
              hintText="Enter your Mother Name"
              floatingLabelText="Mother Name"
              onChange = {this.toInputUppercaseForMotherName}
              style={{width: 500}}
              />
              <br/>
-             <br/>
+             
+             <TextField
+             hintText="Enter your Mother Mobile Number"
+             floatingLabelText="Mother Mobile Number"
+             onChange = {this.handleMotherNum}
+             style={{width: 500}}
+            
+             onInput = {(e) =>{
+              e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,12)
+          }}
+             />
+           {/* <br/>
              <FormControl style={{minWidth: 500}}>
              <MuiPhoneNumber
+             required
              name="motherNum"
              data-cy="user-phone"
              defaultCountry={"in"}
@@ -363,15 +445,17 @@ handleInputChange(e) {
            // floatingLabelText="Mother Phone Number"
             onChange={this.handleMotherNum} 
             ></MuiPhoneNumber>
-            </FormControl>
+            </FormControl> */}
            
         <br/>
            <TextField
+           required
              hintText={userhintText}
              floatingLabelText={userLabel}
              onChange = {(event,newValue) => this.setState({email:newValue})}
              style={{width: 500}}
              />
+             <span style={{color: "red"}}>{this.state.errors["email"]}</span>
            {/* <br/>
            <TextField
              type = "password"
@@ -390,21 +474,26 @@ handleInputChange(e) {
              /> */}
            <br/>
              <MaterialUIPickers type = "dob"
+             required
              hintText="Enter your DOB"
              floatingLabelText="DOB"
              props = {this.props} 
              setDate = {this.setDate.bind(this)}/>
+             <span style={{color: "red"}}>{this.state.errors["dob"]}</span>
            <br/>
            <ClassNum parentCallback = {this.callbackFunction}/>
+           <span style={{color: "red"}}>{this.state.errors["classVal"]}</span>
            <br/>
              <SchooldAutosuggest props = {this.props}
                parentCallback = {this.callbackFunctionForSchoolCode} />
+               <span style={{color: "red"}}>{this.state.errors["schoolCodeVal"]}</span>
                <div>
            <span style = {{fontWeight:'bold'}}>*If your school is not appearing here call or whatsapp on 7838594590</span>
            </div>
            <br/>
             
            <SubjectFess parentCallback = {this.callbackFunctionForSubFees}/>
+           <span style={{color: "red"}}>{this.state.errors["subFeesVal"]}</span>
         
            <SubjectTables props = {this.props} dataFromParent = {this.state.subFeesVal}  subCheckedFunction = {this.subCheckedFunction.bind(this)} />
            <br/>
@@ -436,6 +525,7 @@ handleInputChange(e) {
         </RadioGroup>} */}
            <br/>
            <Checkbox
+           required
         //checked={true}
         onChange={this.handleOathCheck('checkedOath')}
         value="checkedOath"
@@ -447,8 +537,7 @@ handleInputChange(e) {
       <br/>
            <RaisedButton primary={true} style={style} type="submit" className="button">
             Register
-          </RaisedButton>
-           
+          </RaisedButton>  
            </form>
            </Paper>
            </Grid>

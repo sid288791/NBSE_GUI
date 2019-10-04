@@ -464,7 +464,7 @@ export default function SchoolAutosuggest(props) {
               shrink: true,
             },
           }}
-          placeholder="Search a school (start with a)"
+          placeholder="Search your school (start with a)"
           
           options={suggestions}
           components={components}

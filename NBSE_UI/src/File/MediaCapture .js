@@ -59,7 +59,7 @@ class MediaCapture extends Component {
                     onChange={this.handleCapture}
                     type="file"
                 />
-                <label htmlFor="icon-button-photo"> Upload photo with white background 80% face
+                <label htmlFor="icon-button-photo"> Upload Passport Size photo
                     <IconButton color="primary" component="span">
                         <PhotoCamera />
                     </IconButton>
