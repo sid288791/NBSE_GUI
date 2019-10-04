@@ -119,7 +119,7 @@ class Payment extends React.Component{
                   <Grid item xs={10} style={{maxWidth:'1000px'}}>
                 <Paper className={classes.paper}>
                 <Typography variant="h4" component="h2" gutterBottom>
-                You have registered successfully
+                You have registered successfully {this.props.location.state.loginName}
                </Typography>
                <div>
                <span>

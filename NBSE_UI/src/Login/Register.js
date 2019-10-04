@@ -299,7 +299,7 @@ handleInputChange(e) {
        console.log(response);
        if(response.status === 200){
          alert("You have successfully registered");
-        this.props.history.push("/payment", { role : role,loginId :response.data.loginId,loginPass :response.data.password});
+        this.props.history.push("/payment", { role : role,loginName: response.data.stu_name,loginId :response.data.loginId,loginPass :response.data.password});
         //  console.log("registration successfull");
          var loginscreen=[];
          loginscreen.push(<Login parentContext={this} appContext={self.props.appContext} role={role}/>);
