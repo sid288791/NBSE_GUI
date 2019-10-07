@@ -132,6 +132,16 @@ class Payment extends React.Component{
                  <br/>
                  <span>Please Remember above Login ID & Password for future Correspondence.</span>
                  <br/>
+                 <span style = {{fontWeight:'bold'}}>To Download below mentioned documents Login after 30th November.</span>
+                 <br/>
+                 <span>Admit Card</span>
+                 <br/>
+                 <span>Marksheet</span>
+                 <br/>
+                 <span>Participation Certificate</span>
+                 <br/>
+                 <span>Topper Answersheet</span>
+                 <br/>
                  <span>Please visit www.nbse.org.in for more information</span>
                  
                </div>
