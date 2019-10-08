@@ -25,7 +25,7 @@ export default function MaterialUIPickers(props,setDate) {
         <KeyboardDatePicker
           margin="normal"
           id="dob"
-          label="DOB"
+          label="Date Of Birth"
           format="dd/MM/yyyy"
           value={selectedDate}
           onChange={handleDateChange}

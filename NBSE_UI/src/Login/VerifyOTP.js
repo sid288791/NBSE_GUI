@@ -49,6 +49,8 @@ class VerifyOTP extends React.Component{
     };
 
     handleClick(event,param,role,mNum){
+      event.preventDefault();
+
         if(param === 'resend'){
             this.props.history.push("/resendOTP",{ role : role,mNum : mNum});
         }else{
@@ -64,14 +66,15 @@ class VerifyOTP extends React.Component{
             axios.get(apiBaseUrl+'/verifyOTP?mobileNumber='+mNum+"&"+"otp="+this.state.otp)
             .then((response) => {
                 console.log(response);
-                if(response.status === 200){
+                if(response.data === true){
                     this.props.history.push("/register", { role : role,mNum : mNum});
                     var registerscreen=[];
                     registerscreen.push(<Register appContext={self.props.appContext}/>);
                     self.props.appContext.setState({registerPage:[],registerscreen:registerscreen})
                 }
                 else{
-                    console.log("some error ocurred",response.data.code);
+                    console.log("some error ocurred",response.data);
+                    alert("Please enter valid otp");
 
                 }
             }).catch((error) => {
@@ -105,7 +108,11 @@ class VerifyOTP extends React.Component{
         <TextField
              hintText="Please provide OTP"
              floatingLabelText="Enter OTP"
+             type="number"
              onChange = {(event,newValue) => this.setState({otp:newValue})}
+             onInput = {(e) =>{
+              e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,5)
+          }}
              />
              <br/>
            <RaisedButton label="verify" primary={true} style={style} onClick={(event) => this.handleClick(event,'verify',this.props.location.state.role,this.props.location.state.mNum)}/>

@@ -140,12 +140,16 @@ toInputUppercaseForFatherName = e =>{
 handleMotherNum= e =>{
   console.log(e.target.value);
   //this.mother_num=value;
+  if(e.target.value !== "NaN"){
   this.setState({mother_num:e.target.value});
+  }
 }
 
 handleFatherNum = e =>{
   console.log(e.target.value);
+  if(e.target.value !== "NaN"){
   this.setState({father_num:e.target.value});
+  }
   //this.mother_num=value;
  // this.setState({father_num:value});
 }
@@ -341,8 +345,8 @@ handleInputChange(e) {
     var userhintText,userLabel,idval;
     console.log(this.props.location.state);
     //if(this.props.location.state.role === "student"){
-      userhintText="Enter your Email Id";
-      userLabel="Student Email Id";
+      userhintText="Enter your Email ID";
+      userLabel="Student Email ID";
     // }
     // else{
     //   userhintText="Enter your Email Id";
@@ -387,6 +391,7 @@ handleInputChange(e) {
              <br/>
              <TextField
            required
+           type="number"
              hintText="Enter your Father Mobile Number"
              floatingLabelText="Father Mobile Number"
              onChange = {this.handleFatherNum}
@@ -394,6 +399,7 @@ handleInputChange(e) {
             
              onInput = {(e) =>{
               e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,12)
+               
           }}
              />
            <br/>
@@ -425,6 +431,7 @@ handleInputChange(e) {
              <TextField
              hintText="Enter your Mother Mobile Number"
              floatingLabelText="Mother Mobile Number"
+             type="number"
              onChange = {this.handleMotherNum}
              style={{width: 500}}
             
