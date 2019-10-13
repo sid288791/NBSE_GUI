@@ -114,11 +114,12 @@ const suggestions = [
   { label: 'AMARPATI LIONS CITIZENS PUBLIC SCHOOL,DARJEELING, WB', id: '41508' },
   { label: 'GB MEMORIAL INSTITUTION,KOLKATA, WB', id: '85947' },
   { label: 'NORTH KOLKATA PUBLIC SCHOOL,KOLKATA, WB', id: '85956' }
-].map(suggestion => ({
-  value: suggestion.label,
-  label: suggestion.label,
-  id: suggestion.id
-}));
+]
+// ].map(suggestion => ({
+//   value: suggestion.label,
+//   label: suggestion.label,
+//   id: suggestion.id
+// }));
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -425,10 +426,10 @@ export default function SchoolAutosuggest(props) {
   const [multi, setMulti] = React.useState(null);
 
   function handleChangeSingle(value) {
-    console.log(suggestions.length);
-    for(var i=0; i<suggestions.length; i++){
-      if(value.value === suggestions[i].label){
-        idval = suggestions[i].id;
+    console.log(props.dataFromParent.length);
+    for(var i=0; i<props.dataFromParent.length; i++){
+      if(value.label === props.dataFromParent[i].label){
+        idval = props.dataFromParent[i].id;
       }
     }
     props.parentCallback(idval);
@@ -449,7 +450,7 @@ export default function SchoolAutosuggest(props) {
       },
     }),
   };
-
+ console.log(props.dataFromParent);
   return (
     <div className={classes.root}>
       <FormControl style={{minWidth: 500}}>
@@ -466,10 +467,11 @@ export default function SchoolAutosuggest(props) {
           }}
           placeholder="Search your school (start with a)"
           
-          options={suggestions}
+          options={props.dataFromParent}
           components={components}
           value={single}
           onChange={handleChangeSingle}
+          onInput = {handleChangeSingle}
         />
         </FormControl>
         <br/>

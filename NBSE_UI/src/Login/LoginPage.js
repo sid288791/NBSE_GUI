@@ -11,7 +11,21 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import FontIcon from 'material-ui/FontIcon';
+import Drawer from 'material-ui/Drawer';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Toolbar from 'material-ui/Toolbar';
+import { ReactNestedMenu } from 'react-nested-menu';
+import { Link } from 'react-router-dom';
+
+
+
 var apiBaseUrl = "http://localhost:4000/api/";
+
+const styles = {
+  navBar: {'top': AppBar.height}
+}
 
 const Styles = theme => ({
   root: {
@@ -27,7 +41,7 @@ const Styles = theme => ({
   },
   header:{
     textAlign: 'center',
-    backgroundColor: '#31bee5',
+    backgroundColor: '#284e9b',
     color:'white',
     padding:'0.8rem',
     borderRadius:'8px 8px 0px 0px',
@@ -65,12 +79,22 @@ class Login extends Component {
       password:'',
       menuValue:1,
       loginComponent:localloginComponent,
-      loginRole:'student'
+      loginRole:'student',
+      open: false
     }
   }
   static propTypes = {
     classes: PropTypes.object.isRequired
 };
+
+linkTransformer = (menuItem) => {
+
+  return (
+      <Link to={menuItem.url}>{ menuItem.title }</Link>
+  )
+}
+
+
   componentWillMount(){
   // console.log("willmount prop values",this.props);
   if(this.props.role !== undefined){
@@ -210,15 +234,104 @@ class Login extends Component {
                    loginComponent:localloginComponent,
                    loginRole:loginRole})
   }
+  handleToggle = () => this.setState({open: !this.state.open});
+
   render() {
     const { classes } = this.props;
+    const menu = [
+      {
+          id: 1,
+          title: "Home",
+          url: "http://nbse.org.in/"
+      },
+      {
+          id: 2,
+          title: "About Us",
+          url: "/about-us"
+      },
+      {
+          title: "Team",
+          url: "/team",
+          children: [
+              {
+                  id: 8,
+                  title: "Tim Drake",
+                  url: "/tim-drake"
+              },
+              {
+                  id: 9,
+                  title: "Jason Todd",
+                  url: "/jason-todd"
+              },
+              {
+                  id: 10,
+                  title: "Richard Grayson",
+                  url: "/richard-grayson"
+              }
+          ]
+      },
+      {
+          title: "Services",
+          url: "/services",
+          children: [
+              {
+                  id: 5,
+                  title: "Web Development",
+                  url: "/web-development"
+              },
+              {
+                  id: 6,
+                  title: "UI Design",
+                  url: "/ui-design"
+              },
+              {
+                  id: 7,
+                  title: "Copywriting",
+                  url: "/copywriting"
+              }
+          ]
+      },
+      {
+          id: 4,
+          title: "Contact",
+          url: "/contact"
+      },
+      {
+          title: "Social",
+          url: "/social",
+          children: [
+              {
+                  id: 11,
+                  title: "Twitter",
+                  url: "/twitter"
+              },
+              {
+                  id: 12,
+                  title: "Facebook",
+                  url: "/facebook"
+              }
+          ]
+      },
+  ];
+
 
     return (
       <div>
         <MuiThemeProvider>
-        <AppBar
-             title="NBSE"
-           />
+        <AppBar style={{ background: '#284e9b' }}
+             title="NBSE™" iconElementLeft={<IconButton onClick={this.handleToggle} className="material-icons"><MenuIcon /></IconButton>}>
+               </AppBar>
+            {/* <Drawer
+            open={this.state.open}
+            width={200}
+            containerStyle={styles.navBar}>
+            <ReactNestedMenu
+                    navParentClassname="vertical menu nested"
+                    navTopLevelParentClassname="vertical menu"
+                    navChildClassname="child"
+                    linkTransformer={this.linkTransformer}
+                    menuData={menu}/>
+          </Drawer> */}
         </MuiThemeProvider>
         <div>
         <Grid container justify="center" className={classes.gridContainer} spacing={3}>

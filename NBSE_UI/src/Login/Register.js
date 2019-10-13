@@ -39,7 +39,7 @@ const Styles = theme => ({
   },
   header:{
     textAlign: 'center',
-    backgroundColor: '#31bee5',
+    backgroundColor: '#284e9b',
     color:'white',
     padding:'0.8rem',
     borderRadius:'8px 8px 0px 0px',
@@ -77,11 +77,30 @@ class Register extends Component {
       stu_num: '',
       errors: {}
     }
-  }
+  //  this.componentWillMount();
+    }
 
   static propTypes = {
     classes: PropTypes.object.isRequired
 };
+
+async  componentWillMount(){
+
+  var apiBaseUrl = "  http://18.189.141.222:8081/api/v1"
+  axios.get(apiBaseUrl+'/getSchoolsWeb')
+  .then((response) =>{
+    //console.log(response);
+    if(response.status === 200){
+      this.extraSub = response.data
+      console.log(this.extraSub);
+    }
+  }).catch((error) =>{
+    console.log(error);
+  });
+
+}
+
+extraSub= []
 
   finalSubArray = []
   finalSubCodeArray = []
@@ -357,8 +376,8 @@ handleInputChange(e) {
       <div>
         <MuiThemeProvider>
           <div>
-          <AppBar
-             title="NBSE"
+          <AppBar style={{ background: '#284e9b' }}
+             title="NBSE™"
            />
            <br></br>
            <div>
@@ -491,7 +510,7 @@ handleInputChange(e) {
            <ClassNum parentCallback = {this.callbackFunction}/>
            <span style={{color: "red"}}>{this.state.errors["classVal"]}</span>
            <br/>
-             <SchooldAutosuggest props = {this.props}
+             <SchooldAutosuggest props = {this.props} dataFromParent = {this.extraSub}
                parentCallback = {this.callbackFunctionForSchoolCode} />
                <span style={{color: "red"}}>{this.state.errors["schoolCodeVal"]}</span>
                <div>

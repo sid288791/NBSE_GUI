@@ -31,7 +31,7 @@ const Styles = theme => ({
   },
   header:{
     textAlign: 'center',
-    backgroundColor: '#31bee5',
+    backgroundColor: '#284e9b',
     color:'white',
     padding:'0.8rem',
     borderRadius:'8px 8px 0px 0px',
@@ -101,8 +101,8 @@ class MobileNumber extends React.Component{
            
             <MuiThemeProvider>
             <div>
-            <AppBar
-               title="NBSE"
+            <AppBar style={{ background: '#284e9b' }}
+               title="NBSE™"
              />
              <br/>
              <div>

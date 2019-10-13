@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import Videocam from '@material-ui/icons/Videocam';
+import FormControl from "@material-ui/core/FormControl";
+
 
 const styles = (theme) => ({
     input: {
@@ -28,19 +30,21 @@ class MediaCapture extends Component {
     
 
     handleCapture = ({ target }) => {
-        const fileReader = new FileReader();
         const name = target.accept.includes('image') ? 'images' : 'videos';
         if(target.files[0] !== undefined){
         if(target.files[0].size>205000){
             alert("Please select image less than 200KB");
         }
         else{
-        fileReader.readAsDataURL(target.files[0]);
-        fileReader.onload = (e) => {
-            this.setState((prevState) => ({
-                [name]: [...prevState[name], e.target.result]
-            }));
-        };
+        const fileReader = new FileReader();
+        var url = fileReader.readAsDataURL(target.files[0]);
+        fileReader.onloadend = function (e) {
+            this.setState({
+                imgSrc: [fileReader.result]
+            })
+          }.bind(this);
+        console.log(url) 
+        
         this.props.parentCallback(target.files[0]);
     }
     }
@@ -64,7 +68,8 @@ class MediaCapture extends Component {
                         <PhotoCamera />
                     </IconButton>
                 </label>
-
+                <br/>
+                <img src={this.state.imgSrc} />
             </Fragment>
         );
     }
