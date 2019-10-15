@@ -86,7 +86,7 @@ class Register extends Component {
 
 async  componentWillMount(){
 
-  var apiBaseUrl = "  http://18.189.141.222:8081/api/v1"
+  var apiBaseUrl = "  https://18.189.141.222:8081/api/v1"
   axios.get(apiBaseUrl+'/getSchoolsWeb')
   .then((response) =>{
     //console.log(response);
@@ -248,7 +248,7 @@ handleInputChange(e) {
 
 
   handleClick(event,role,mNum){
-    var apiBaseUrl = "http://18.189.141.222:8081/api/v1";
+    var apiBaseUrl = "https://18.189.141.222:8081/api/v1";
     // console.log("values in register handler",role);
     var self = this;
     //console.log(this.state.payMore);

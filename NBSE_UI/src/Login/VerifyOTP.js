@@ -55,7 +55,7 @@ class VerifyOTP extends React.Component{
             this.props.history.push("/resendOTP",{ role : role,mNum : mNum});
         }else{
             console.log(mNum)
-        var apiBaseUrl = "http://18.189.141.222:8081/api/v1";
+        var apiBaseUrl = "https://18.189.141.222:8081/api/v1";
         var self = this;
         if(this.state.otp.length>0){
             var payload={
@@ -68,6 +68,7 @@ class VerifyOTP extends React.Component{
                 console.log(response);
                 if(response.data === true){
                     this.props.history.push("/register", { role : role,mNum : mNum});
+                   // this.props.history.push("/afterLogin", { loginName : "test"});
                     var registerscreen=[];
                     registerscreen.push(<Register appContext={self.props.appContext}/>);
                     self.props.appContext.setState({registerPage:[],registerscreen:registerscreen})

@@ -57,7 +57,7 @@ class MediaCapture extends Component {
         return (
             <Fragment>
                 <input
-                    accept="image/*"
+                    accept="image/x-png"
                     className={classes.input}
                     id="icon-button-photo"
                     onChange={this.handleCapture}

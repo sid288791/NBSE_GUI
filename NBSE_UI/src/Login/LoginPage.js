@@ -18,6 +18,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from 'material-ui/Toolbar';
 import { ReactNestedMenu } from 'react-nested-menu';
 import { Link } from 'react-router-dom';
+import NestedList from '../Menu/NestedList'
 
 
 
@@ -325,12 +326,13 @@ linkTransformer = (menuItem) => {
             open={this.state.open}
             width={200}
             containerStyle={styles.navBar}>
-            <ReactNestedMenu
+              <NestedList></NestedList>
+             <ReactNestedMenu
                     navParentClassname="vertical menu nested"
                     navTopLevelParentClassname="vertical menu"
                     navChildClassname="child"
                     linkTransformer={this.linkTransformer}
-                    menuData={menu}/>
+                    menuData={menu}/> 
           </Drawer> */}
         </MuiThemeProvider>
         <div>

@@ -17,6 +17,7 @@ import MobileNumber from './Login/MobileNumber';
 import Register from './Login/Register';
 import Login from './Login/LoginPage';
 import Payment from './Login/Payment'
+import AfterLoginPage from './Login/AfterLoginPage';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
   
 
@@ -30,6 +31,7 @@ const routing = (
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path="/payment" component={Payment} />
+        <Route path="/afterLogin" component={AfterLoginPage} />
         <Route component={Notfound} />
       </Switch>
   </Router>

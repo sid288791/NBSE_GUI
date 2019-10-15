@@ -59,7 +59,7 @@ class MobileNumber extends React.Component{
 
     handleClick(event,role){
        // var apiBaseUrl = "http://localhost:4000/api/";
-        var apiBaseUrl = " http://18.189.141.222:8081/api/v1"
+        var apiBaseUrl = " https://18.189.141.222:8081/api/v1"
         // console.log("values in register handler",role);
         var mNum = this.state.mobile_number.slice(4,9)+this.state.mobile_number.slice(10,15);
         var self = this;
